@@ -1,12 +1,15 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import agent from "../../app/api/agent";
+import NotFound from "../../app/errors/NotFound";
+import Loading from "../../app/layout/Loading";
 import { Product } from "../../app/models/product";
 
 export default function ProductDetails() {
     // get the params
-    const { id } = useParams();
+    const { id } = useParams<{id: string}>();
+    console.log(id);
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -18,8 +21,8 @@ export default function ProductDetails() {
     }, [id]);
 
 
-    if(loading) return <Typography variant='h3'>Loading...</Typography>
-    if(!product) return <Typography variant='h3'>Product not Found</Typography>
+    if(loading) return <Loading message='Loading Product...'/>
+    if(!product) return <NotFound />
 
     return(
         <Grid container spacing={6}>

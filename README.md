@@ -53,3 +53,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 - https://mui.com/
 - https://reactrouter.com/
+- https://www.npmjs.com/package/axios
+- https://www.npmjs.com/package/react-toastify

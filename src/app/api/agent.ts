@@ -1,11 +1,14 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
+const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
+
 axios.defaults.baseURL = "http://localhost:5000/api/";
 
 const responseBody = (res: AxiosResponse) => res.data;
 
 axios.interceptors.response.use(
-  (res) => {
+  async (res) => {
+    await sleep();
     return res;
   },
   (err: AxiosError) => {

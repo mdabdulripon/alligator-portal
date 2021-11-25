@@ -1,11 +1,12 @@
 import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import AboutPage from "../../features/about/AboutPage";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import ContactPage from "../../features/contact/ContactPage";
 import HomePage from "../../features/home/HomePage";
+import NotFound from "../errors/NotFound";
 import Header from "./Header";
 
 function App() {
@@ -30,13 +31,14 @@ function App() {
 			<CssBaseline />
 			<Header darkMode={darkMode} handleThemeChange={handleThemeChange}  />
 			<Container>
-				<Routes>
-					<Route path='/' element={<HomePage />} />
-					<Route path='/catalog' element={<Catalog />} />
-					<Route path='/catalog/:id' element={<ProductDetails />} />
-					<Route path='/about' element={<AboutPage />} />
-					<Route path='/contact' element={<ContactPage />} />
-				</Routes>
+				<Switch>
+					<Route exact path='/' component={HomePage} />
+					<Route exact path='/catalog' component={Catalog} />
+					<Route path='/catalog/:id' component={ProductDetails} />
+					<Route path='/about' component={AboutPage} />
+					<Route path='/contact' component={ContactPage} />
+					<Route component={NotFound} />
+				</Switch>
 			</Container>
 		</ThemeProvider>
 	);

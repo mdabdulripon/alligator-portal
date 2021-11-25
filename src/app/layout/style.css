@@ -1,3 +1,24 @@
+.container {
+  margin: 0 auto;
+  max-width: 1175px;
+  border: 1px solid rebeccapurple;
+}
 
+.page-title {
+  font-size: 20px;
+}
 
+/* loading style */
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.loading-message {
+  justify-content: center;
+  position: fixed;
+  top: 55%;
+}
