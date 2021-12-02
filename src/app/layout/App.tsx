@@ -2,6 +2,7 @@ import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/materia
 import { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import AboutPage from "../../features/about/AboutPage";
+import BasketPage from "../../features/basket/BasketPage";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import ContactPage from "../../features/contact/ContactPage";
@@ -37,6 +38,7 @@ function App() {
 					<Route path='/catalog/:id' component={ProductDetails} />
 					<Route path='/about' component={AboutPage} />
 					<Route path='/contact' component={ContactPage} />
+					<Route path='/basket' component={BasketPage} />
 					<Route component={NotFound} />
 				</Switch>
 			</Container>
