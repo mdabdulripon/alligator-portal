@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import agent from "../../app/api/agent";
+import { useStoreContext } from "../../app/context/StoreContext";
 import { Product } from "../../app/models/product";
 
 
@@ -10,14 +10,15 @@ interface Props {
 }
 
 export default function ProductCard({product} : Props) {
-    const [loading, setLoading] = useState(false);
-
+    // const [loading, setLoading] = useState(false);
+    const { setBasket } = useStoreContext();
 
     function handleAddItem(productId: number) {
-        setLoading(true);
+        // setLoading(true);
         agent.basket.addItem(productId)
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false));
+            .then(b => setBasket(b))
+            .catch(err => console.log(err));
+            // .finally(() => setLoading(false));
     }
 
 
@@ -37,7 +38,7 @@ export default function ProductCard({product} : Props) {
             <CardMedia
                 sx={{ height: 140, backgroundSize: 'contain', bgcolor:'primary.light'}}
                 image={product.pictureUrl}
-                title={product.name}
+             title={product.name}
             />
             <CardContent>
                 <Typography gutterBottom color="text.secondary" variant="h5">

@@ -24,17 +24,12 @@ export function StoreProvider({children} : PropsWithChildren<any>) {
     function removeItem(productId: number, quantity: number) {
         if(!basket) return;
         const items = [...basket.items];
-
-        const idx = items.findIndex(i => i.productId = productId);
-        
+        const idx = items.findIndex(i => i.productId === productId);
         if(idx >= 0) {
             items[idx].quantity -= quantity;
-            if(items[idx].quantity === 0) {
-                items.splice(idx, 1);
-            }
-
+            if(items[idx].quantity === 0) items.splice(idx, 1);
             setBasket(prevState => {
-                return { ...prevState!, items}
+                return {...prevState!, items}
             });
         }
     }
