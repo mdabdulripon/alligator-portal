@@ -1,28 +1,33 @@
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { LoadingButton } from "@mui/lab";
+import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { useState } from "react";
 import agent from "../../app/api/agent";
 import { useStoreContext } from "../../app/context/StoreContext";
 
 export default function BasketPage() {
 
+	const [loading, setLoading] = useState(false);
 	const { basket, setBasket, removeItem } = useStoreContext();
 
 	function handleAddItem(productId: number) {
+		setLoading(true);
 		agent.basket.addItem(productId)
 			.then(b => setBasket(b))
 			.catch(err => console.log(err))
+			.finally(() => setLoading(false));
 	}
 
 	function handleRemoveItem(productId: number, quantity = 1) {
+		setLoading(true);
 		agent.basket.removeItem(productId, quantity)
 			.then(() => removeItem(productId, quantity))
 			.catch(err => console.log(err))
+			.finally(() => setLoading(false));
 	}
 		
-
-	if(!basket) return <Typography>Your basket is empty</Typography>
-
+	if (!basket || basket.items.length === 0) return <Typography>Your basket is empty</Typography>
+	
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -49,19 +54,19 @@ export default function BasketPage() {
 						</TableCell>
 						<TableCell align="right">{(item.price).toFixed(2)}</TableCell>
 						<TableCell align="right">
-							<IconButton color='error' onClick={() => handleRemoveItem(item.productId)}>
+							<LoadingButton color='error' loading={loading} onClick={() => handleRemoveItem(item.productId)}>
 								<Remove />
-							</IconButton>
+							</LoadingButton>
 							<span>{item.quantity}</span>
-							<IconButton color='primary' onClick={() => handleAddItem(item.productId)}>
+							<LoadingButton color='primary' loading={loading} onClick={() => handleAddItem(item.productId)}>
 								<Add />
-							</IconButton>
+							</LoadingButton>
 						</TableCell>
 						<TableCell align="right">{(item.price * item.quantity).toFixed(2)}</TableCell>
 						<TableCell align="right">
-							<IconButton color='error' onClick={() => handleRemoveItem(item.productId, item.quantity)}>
+							<LoadingButton color='error' loading={loading} onClick={() => handleRemoveItem(item.productId, item.quantity)}>
 								<Delete />
-							</IconButton>
+							</LoadingButton>
 						</TableCell>
 					</TableRow>
 					))}

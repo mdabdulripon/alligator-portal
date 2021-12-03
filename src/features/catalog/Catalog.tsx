@@ -17,7 +17,6 @@ export default function Catalog() {
         .finally(() => setLoading(false));
     }, [])
 
-    console.log(products);
     if(loading) return <Loading message='Loading Products...' />
     if(products.length === 0) return <Typography variant='h3'>Product not Found</Typography>
 
