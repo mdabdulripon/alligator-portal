@@ -1,4 +1,5 @@
 export interface Product {
+  // TODO: Rename IProduct
   id: number;
   name: string;
   description: string;
