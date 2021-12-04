@@ -1,14 +1,14 @@
 import { Add, Delete, Remove } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import agent from "../../app/api/agent";
 import { useStoreContext } from "../../app/context/StoreContext";
 import BasketSummary from "./BasketSummary";
 
 export default function BasketPage() {
 
-	// const [loading, setLoading] = useState(false);
 	const { basket, setBasket, removeItem } = useStoreContext();
 	const [status, setStatus] = useState({
 		loading: false,
@@ -88,6 +88,7 @@ export default function BasketPage() {
 				<Grid item xs={6}></Grid>
 				<Grid item xs={6}>
 					<BasketSummary />
+					<Button variant='contained' size='large' fullWidth component={Link} to='/checkout'>Checkout</Button>
 				</Grid>
 			</Grid>
 		</>
