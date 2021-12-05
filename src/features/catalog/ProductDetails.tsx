@@ -96,7 +96,7 @@ export default function ProductDetails() {
                     </Grid>
                     <Grid item xs={6}> 
                         <LoadingButton sx={{ height: '55px'}} color='primary' size='large' variant='contained' 
-                            fullWidth disabled={item?.quantity === quantity || !item && quantity === 0} 
+                            fullWidth disabled={(item?.quantity === quantity) || (!item && quantity === 0)} 
                             loading={submitting} onClick={handleUpdateCart}>
                             { item ? 'Update Quantity' : 'Add to Cart'}
                         </LoadingButton>

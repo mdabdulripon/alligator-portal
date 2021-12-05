@@ -55,3 +55,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - https://reactrouter.com/
 - https://www.npmjs.com/package/axios
 - https://www.npmjs.com/package/react-toastify
+
+- redux
+  - npm install redux react-redux
