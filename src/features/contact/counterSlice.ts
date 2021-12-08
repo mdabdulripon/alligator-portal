@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// interface
+// Interface
 export interface CounterState {
   data: number;
   title: string;
 }
 
-// initial state
+// Initial State
 const initialState: CounterState = {
   data: 42,
   title: "contact page - Slice: redux toolkit",
 };
 
+// Create Slice
 export const counterSlice = createSlice({
   name: "counter",
   initialState,
