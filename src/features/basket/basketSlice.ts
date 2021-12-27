@@ -25,6 +25,17 @@ export const addBasketItemAsync = createAsyncThunk<
   }
 });
 
+export const removeBasketItemAsync = createAsyncThunk<
+  Basket,
+  { productId: number; quantity: number; name?: string }
+>("basket/removeBasketItemAsync", async ({ productId, quantity }) => {
+  try {
+    return await agent.basket.removeItem(productId, quantity);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // Create Slice
 export const basketSlice = createSlice({
   name: "basket",
@@ -33,21 +44,9 @@ export const basketSlice = createSlice({
     setBasket: (state, action) => {
       state.basket = action.payload;
     },
-    removeItem: (state, action) => {
-      const { productId, quantity } = action.payload;
-      const idx = state.basket?.items.findIndex(
-        (i) => i.productId === productId
-      );
-      if (idx === -1 || idx === undefined) return;
-      state.basket!.items[idx].quantity -= quantity;
-      if (state.basket!.items[idx].quantity === 0) {
-        state.basket?.items.splice(idx, 1);
-      }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(addBasketItemAsync.pending, (state, action) => {
-      console.log(action);
       state.status = "pendingAddItem" + action.meta.arg.productId;
     });
     builder.addCase(addBasketItemAsync.fulfilled, (state, action) => {
@@ -57,7 +56,27 @@ export const basketSlice = createSlice({
     builder.addCase(addBasketItemAsync.rejected, (state, action) => {
       state.status = "Idle";
     });
+
+    builder.addCase(removeBasketItemAsync.pending, (state, action) => {
+      state.status =
+        "pendingRemoveItem" + action.meta.arg.productId + action.meta.arg.name;
+    });
+    builder.addCase(removeBasketItemAsync.fulfilled, (state, action) => {
+      const { productId, quantity } = action.meta.arg;
+      const idx = state.basket?.items.findIndex(
+        (i) => i.productId === productId
+      );
+      if (idx === -1 || idx === undefined) return;
+      state.basket!.items[idx].quantity -= quantity;
+      if (state.basket!.items[idx].quantity === 0) {
+        state.basket?.items.splice(idx, 1);
+      }
+      state.status = "Idle";
+    });
+    builder.addCase(removeBasketItemAsync.rejected, (state, action) => {
+      state.status = "Idle";
+    });
   },
 });
 
-export const { setBasket, removeItem } = basketSlice.actions;
+export const { setBasket } = basketSlice.actions;
