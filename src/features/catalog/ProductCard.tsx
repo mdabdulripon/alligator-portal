@@ -5,7 +5,6 @@ import { Product } from "../../app/models/product";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { addBasketItemAsync } from "../basket/basketSlice";
 
-
 interface Props {
     product: Product;
 }
@@ -40,10 +39,10 @@ export default function ProductCard({product} : Props) {
                     {product.productCategory} / {product.productType}
                 </Typography>
             </CardContent>
-            <CardActions>
-                <LoadingButton size="small" variant='outlined' loading={status.includes('pendingAddItem' + product.id )} 
+            <CardActions className="card-action">
+                <LoadingButton className="card-action__btn" size="small" variant='outlined' loading={status.includes('pendingAddItem' + product.id )} 
                     onClick={() => dispatch(addBasketItemAsync({productId: product.id})) }>Add to Cart</LoadingButton>
-                <Button size="small" variant='outlined'  component={Link} to={`/catalog/${product.id}`} >View</Button>
+                <Button className="card-action__btn" size="small" variant='outlined'  component={Link} to={`/catalog/${product.id}`} >View</Button>
             </CardActions>
         </Card>
     )
