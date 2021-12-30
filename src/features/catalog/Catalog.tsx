@@ -1,23 +1,23 @@
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import agent from "../../app/api/agent";
+import { useEffect } from "react";
 import Loading from "../../app/layout/Loading";
-import { Product } from "../../app/models/product";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { fetchProductAsync, productSelectors } from "./catalogSlice";
 import ProductList from "./ProductList";
 
 
 export default function Catalog() {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
+    const products = useAppSelector(productSelectors.selectAll);
+    const { productLoaded, status } = useAppSelector(state => state.catalog);
+    const dispatch = useAppDispatch();
     
     useEffect(() => {
-       agent.catalog.list()
-        .then(res => setProducts(res))
-        .catch(err => console.log(err))
-        .finally(() => setLoading(false));
+      if(!productLoaded) {
+          dispatch(fetchProductAsync())
+      }
     }, [])
 
-    if(loading) return <Loading message='Loading Products...' />
+    if (status.includes('pending')) return <Loading message='Loading Products...' />
     if(products.length === 0) return <Typography variant='h3'>Product not Found</Typography>
 
     return(
