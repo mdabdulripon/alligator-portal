@@ -17,22 +17,25 @@ const initialState: BasketState = {
 export const addBasketItemAsync = createAsyncThunk<
   Basket,
   { productId: number; quantity?: number }
->("basket/addBasketItemAsync", async ({ productId, quantity = 1 }) => {
-  try {
-    return await agent.basket.addItem(productId, quantity);
-  } catch (error) {
-    console.log(error);
+>(
+  "basket/addBasketItemAsync",
+  async ({ productId, quantity = 1 }, thunkAPI) => {
+    try {
+      return await agent.basket.addItem(productId, quantity);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
   }
-});
+);
 
 export const removeBasketItemAsync = createAsyncThunk<
   Basket,
   { productId: number; quantity: number; name?: string }
->("basket/removeBasketItemAsync", async ({ productId, quantity }) => {
+>("basket/removeBasketItemAsync", async ({ productId, quantity }, thunkAPI) => {
   try {
     return await agent.basket.removeItem(productId, quantity);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({ error: error.data });
   }
 });
 
