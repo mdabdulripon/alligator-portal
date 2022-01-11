@@ -27,6 +27,7 @@ const requests = {
 const catalog = {
   list: () => requests.get("products"),
   details: (id: number) => requests.get(`products/${id}`),
+  filters: () => requests.get("products/filters"),
 };
 
 const basket = {

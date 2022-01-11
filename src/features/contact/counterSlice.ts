@@ -9,7 +9,7 @@ export interface CounterState {
 // Initial State
 const initialState: CounterState = {
   data: 42,
-  title: "contact page - Slice: redux toolkit",
+  title: "Contact Page - Slice: Redux Toolkit",
 };
 
 // Create Slice

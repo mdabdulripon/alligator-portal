@@ -9,7 +9,7 @@ import { RootState } from "../../app/store/configureStore";
 
 const productAdapter = createEntityAdapter<Product>();
 
-// ! product array
+// ? product array
 export const fetchProductsAsync = createAsyncThunk<Product[]>(
   "catalog/fetchProductsAsync",
   async (_, thunkAPI) => {
@@ -21,7 +21,7 @@ export const fetchProductsAsync = createAsyncThunk<Product[]>(
   }
 );
 
-// Single Product
+// ? Single Product
 export const fetchProductAsync = createAsyncThunk<Product, number>(
   "catalog/fetchProductAsync",
   async (productId, thunkAPI) => {
@@ -33,15 +33,30 @@ export const fetchProductAsync = createAsyncThunk<Product, number>(
   }
 );
 
+// ? Get Categories and types
+export const fetchProductFilters = createAsyncThunk(
+  "catalog/fetchProductFilters",
+  async (_, thunkAPI) => {
+    try {
+      return await agent.catalog.filters();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
+  }
+);
+
 export const catalogSlice = createSlice({
   name: "catalog",
   initialState: productAdapter.getInitialState({
     productLoaded: false,
+    filtersLoaded: false,
     status: "idle",
+    categories: [],
+    types: [],
   }),
   reducers: {},
   extraReducers: (builder) => {
-    // Products cases
+    // ? All Products Boilerplate
     builder.addCase(fetchProductsAsync.pending, (state) => {
       state.status = "pendingFetchProducts";
     });
@@ -53,7 +68,8 @@ export const catalogSlice = createSlice({
     builder.addCase(fetchProductsAsync.rejected, (state) => {
       state.status = "idle";
     });
-    // product cases
+
+    // ? Single Product Boilerplate
     builder.addCase(fetchProductAsync.pending, (state) => {
       state.status = "pendingFetchProduct";
     });
@@ -62,6 +78,19 @@ export const catalogSlice = createSlice({
       state.status = "idle";
     });
     builder.addCase(fetchProductAsync.rejected, (state, action) => {
+      state.status = "idle";
+    });
+
+    // ? Filters Boilerplate
+    builder.addCase(fetchProductFilters.pending, (state, action) => {
+      state.status = "pendingFetchFilters";
+    });
+    builder.addCase(fetchProductFilters.fulfilled, (state, action) => {
+      state.categories = action.payload.categories;
+      state.types = action.payload.types;
+      state.status = "idle";
+    });
+    builder.addCase(fetchProductFilters.rejected, (state, action) => {
       state.status = "idle";
     });
   },
