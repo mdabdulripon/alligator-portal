@@ -12,3 +12,12 @@ export interface Product {
   created: Date;
   lastUpdate: Date;
 }
+
+export interface IProductParams {
+  orderBy: string;
+  searchTerm?: string;
+  types?: string[];
+  categories?: string[];
+  pageNumber: number;
+  pageSize: number;
+}
