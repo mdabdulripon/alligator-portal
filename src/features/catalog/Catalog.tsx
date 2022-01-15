@@ -1,6 +1,7 @@
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, Pagination, Paper, Radio, RadioGroup, TextField, Typography } from "@mui/material";
 import { useEffect } from "react";
 import Loading from "../../app/layout/Loading";
+import CheckboxButtonGroup from "../../app/shared/CheckboxButtonGroup";
 import RadioButtonGroup from "../../app/shared/RadioButtonGroup";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchProductFilters, fetchProductsAsync, productSelectors, setProductParams } from "./catalogSlice";
@@ -47,19 +48,19 @@ export default function Catalog() {
 				</Paper>
 				
 				<Paper sx={{ mb: 2, p: 2}}>
-					<FormGroup>
-						{ categories.map( cat => (
-							<FormControlLabel control={<Checkbox />} label={cat} key={cat} />
-						))}
-					</FormGroup>
+					<CheckboxButtonGroup 
+						items={categories}
+						selectedItems={productParams.categories}
+						onChange={(items: string[]) => dispatch(setProductParams({categories: items}))}
+					/>
 				</Paper>
 
 				<Paper sx={{ mb: 2, p: 2}}>
-					<FormGroup>
-						{ types.map( type => (
-							<FormControlLabel control={<Checkbox />} label={type} key={type} />
-						))}
-					</FormGroup>
+					<CheckboxButtonGroup 
+						items={types}
+						selectedItems={productParams.types}
+						onChange={(items: string[]) => dispatch(setProductParams({types: items}))}
+					/>
 				</Paper>
 
 			</Grid>
