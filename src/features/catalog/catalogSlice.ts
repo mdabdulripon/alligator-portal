@@ -148,6 +148,7 @@ export const catalogSlice = createSlice({
     builder.addCase(fetchProductFilters.fulfilled, (state, action) => {
       state.categories = action.payload.categories;
       state.types = action.payload.types;
+      state.filtersLoaded = true;
       state.status = "idle";
     });
     builder.addCase(fetchProductFilters.rejected, (state, action) => {

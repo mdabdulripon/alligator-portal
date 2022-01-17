@@ -18,7 +18,7 @@ const sortOptions = [
 
 export default function Catalog() {
 	const products = useAppSelector(productSelectors.selectAll);
-	const { productsLoaded, status, filtersLoaded, categories, types, productParams, pagination } = useAppSelector(state => state.catalog);
+	const { productsLoaded, filtersLoaded, categories, types, productParams, pagination } = useAppSelector(state => state.catalog);
 	const dispatch = useAppDispatch();
 	
 	useEffect(() => {
@@ -30,8 +30,7 @@ export default function Catalog() {
 	if (!filtersLoaded) dispatch(fetchProductFilters());
 	}, [dispatch, filtersLoaded])
 
-	if (status.includes('pending') || !pagination) return <Loading message='Loading Products...' />
-	// if(products.length === 0) return <Typography variant='h3'>Product not Found</Typography>
+	if (!filtersLoaded) return <Loading message='Loading Products...' />
 
 	return(
 		<Grid container columnSpacing={4}>
@@ -72,10 +71,12 @@ export default function Catalog() {
 		
 			<Grid item xs={3} />
 			<Grid item xs={9} sx={{mb: 5}}>
-				<AppPagination 
-					pagination={pagination} 
-					onPageChange={(page: number) => dispatch(setPageNumber({pageNumber: page}))}
-				/>
+				{pagination && 
+					<AppPagination 
+						pagination={pagination} 
+						onPageChange={(page: number) => dispatch(setPageNumber({pageNumber: page}))}
+					/>
+				}
 			</Grid>
 		</Grid>
 	)
