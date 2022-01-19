@@ -19,11 +19,11 @@ export default function BasketPage() {
 				<Table sx={{ minWidth: 650 }} aria-label="simple table">
 					<TableHead>
 						<TableRow>
-						<TableCell>Product</TableCell>
-						<TableCell align="right">Price</TableCell>
-						<TableCell align="right">Quantity</TableCell>
-						<TableCell align="right">Subtitle</TableCell>
-						<TableCell align="right"></TableCell>
+							<TableCell>Product</TableCell>
+							<TableCell align="right">Price</TableCell>
+							<TableCell align="right">Quantity</TableCell>
+							<TableCell align="right">Subtitle</TableCell>
+							<TableCell align="right"></TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -32,12 +32,7 @@ export default function BasketPage() {
 							key={item.productId}
 							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 						>
-							<TableCell component="th" scope="row">
-								<Box display='flex' alignItems='center'>
-									<img src={item.pictureUrl} alt={item.name} style={{ height: 50, marginRight: 20}} />
-									<span>{ item.name }</span>
-								</Box>
-							</TableCell>
+							<TableCell component="th" scope="row">{ item.name }</TableCell>
 							<TableCell align="right">{(item.price).toFixed(2)}</TableCell>
 							<TableCell align="right">
 								<LoadingButton color='error' loading={status === 'pendingRemoveItem' + item.productId + 'rem'}

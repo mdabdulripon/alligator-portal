@@ -81,10 +81,10 @@ export const fetchProductFilters = createAsyncThunk(
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 6,
+    pageSize: 10,
     orderBy: "name",
     categories: [],
-    types: []
+    types: [],
   };
 }
 
@@ -102,7 +102,11 @@ export const catalogSlice = createSlice({
   reducers: {
     setProductParams: (state, action) => {
       state.productsLoaded = false;
-      state.productParams = { ...state.productParams, ...action.payload, pageNumber: 1 };
+      state.productParams = {
+        ...state.productParams,
+        ...action.payload,
+        pageNumber: 1,
+      };
     },
     setPageNumber: (state, action) => {
       state.productsLoaded = false;
@@ -161,5 +165,9 @@ export const productSelectors = productAdapter.getSelectors(
   (state: RootState) => state.catalog
 );
 
-export const { setProductParams, resetProductParams, setPagination, setPageNumber } =
-  catalogSlice.actions;
+export const {
+  setProductParams,
+  resetProductParams,
+  setPagination,
+  setPageNumber,
+} = catalogSlice.actions;

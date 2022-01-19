@@ -28,3 +28,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.no-wrap {
+  white-space: nowrap;
+  min-width: 120px;
+}

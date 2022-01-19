@@ -30,6 +30,8 @@ export default function Catalog() {
 	if (!filtersLoaded) dispatch(fetchProductFilters());
 	}, [dispatch, filtersLoaded])
 
+	console.log(products);
+
 	if (!filtersLoaded) return <Loading message='Loading Products...' />
 
 	return(
@@ -39,14 +41,12 @@ export default function Catalog() {
 				<Paper sx={{ mb: 2, p: 2}}>
 					<ProductSearch />
 				</Paper>
-				
 				<Paper sx={{ mb: 2, p: 2}}>
 					<RadioButtonGroup 
 						selectedValue={productParams.orderBy}
 						options={sortOptions} 
 						onChange={(event) => dispatch(setProductParams({ orderBy: event.target.value}))}/>
 				</Paper>
-				
 				<Paper sx={{ mb: 2, p: 2}}>
 					<CheckboxButtonGroup 
 						items={categories}
@@ -54,7 +54,6 @@ export default function Catalog() {
 						onChange={(items: string[]) => dispatch(setProductParams({categories: items}))}
 					/>
 				</Paper>
-
 				<Paper sx={{ mb: 2, p: 2}}>
 					<CheckboxButtonGroup 
 						items={types}
@@ -62,8 +61,8 @@ export default function Catalog() {
 						onChange={(items: string[]) => dispatch(setProductParams({types: items}))}
 					/>
 				</Paper>
-
 			</Grid>
+
 			<Grid item xs={9}>
 				<ProductList products={products} />
 			</Grid>
