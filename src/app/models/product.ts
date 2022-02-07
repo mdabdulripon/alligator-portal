@@ -18,6 +18,7 @@ export interface IProductParams {
   searchTerm?: string;
   types: string[];
   categories: string[];
+  items: string[];
   pageNumber: number;
   pageSize: number;
 }

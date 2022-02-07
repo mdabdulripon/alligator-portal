@@ -85,6 +85,7 @@ function initParams() {
     orderBy: "name",
     categories: [],
     types: [],
+    items: [],
   };
 }
 
